@@ -6,8 +6,15 @@ public class Library {
     private ArrayList<Book> books = new ArrayList<>();
 
     public Library() {
-        String[] genre1 = {"Action", "Sports","Thriller"};
-        String[] genre2 = {"Science Fiction","Thriller"};
+        ArrayList<String> genre1 = new ArrayList<>();
+        genre1.add("Action");
+        genre1.add("Sports");
+        genre1.add("Thriller");
+
+        ArrayList<String> genre2 = new ArrayList<>();
+        genre2.add("Science Fiction");
+        genre2.add("Thriller");
+
         books.add(new Book("Blue Lock", "Muneyuki Kaneshiro", 2021, genre1, 
         "In 2018, the Japanese national team finished 16th in the FIFA World Cup. As a result, the Japanese Football Union hires the soccer enigma Ego Jinpachi. His master plan to lead Japan to stardom is Blue Lock," +
          " a training regimen designed to create the world's greatest egotist striker. Those who fail Blue Lock will never again be permitted to represent Japan. Yoichi Isagi, an unknown high school soccer player who " + 
@@ -20,7 +27,7 @@ public class Library {
     public void addBook() {
         String title, author;
         char userInput;
-        int year;
+        int year = 0;
         boolean checkContinue = true;
         Scanner input = new Scanner(System.in);
 
@@ -30,7 +37,20 @@ public class Library {
             System.out.println("Enter the author: ");
             author = input.next();
             System.out.println("Enter the year: ");
-            year = input.nextInt();
+
+            while(checkContinue) {
+                if(input.hasNextInt()) {
+                    year = input.nextInt();
+                }
+                else {
+                    System.out.println("Enter a valid year");
+                    input.next();
+                    continue;
+                }
+                checkContinue = false;
+            } 
+
+           
 
             System.out.println("Is the following details correct?(y/n)");
             System.out.println("Title: " + title +
@@ -50,7 +70,7 @@ public class Library {
                 userInput = input.next().charAt(0); 
             }
         }
-        }
+    }
     
 
     public void removeBook(String title) {
@@ -70,8 +90,10 @@ public class Library {
     }
 
     public void editBook() {
-        String title, author, userInput;
-        int year, index = 0;
+        String title, author, description, genre, userInput;
+        char option = ' ';
+        ArrayList <String> genreList = new ArrayList<>();
+        int year = 0, index = 0;
         boolean checkContinue = false;
         Scanner input = new Scanner(System.in);
 
@@ -86,31 +108,86 @@ public class Library {
         }
 
         if(checkContinue) {
-            System.out.println("Which property to edit? (title, author, year) ");
-            userInput = input.nextLine();
-            if(userInput.toLowerCase().equals("title")) {
-                System.out.println("Change title: ");
-                title = input.nextLine();
-                books.get(index).setTitle(title);
-                System.out.println("Successful edit");
-            }
-            else if (userInput.toLowerCase().equals("author")) {
-                System.out.println("Change author: ");
-                author = input.nextLine();
-                books.get(index).setAuthor(author);
-                System.out.println("Successful edit");
-            }
-            else if (userInput.toLowerCase().equals("year")) {
-                System.out.println("Change year: ");
-                year = input.nextInt();
-                books.get(index).setYear(year);
-                System.out.println("Successful edit");
-            }
-            else {
-                System.out.println("Invalid option");
-            }
+            do {
+                System.out.println("Which property to edit? (title, author, year, description, genre) ");
+                userInput = input.nextLine();
+                if(userInput.toLowerCase().equals("title")) {
+                    System.out.println("Change title: ");
+                    title = input.nextLine();
+                    books.get(index).setTitle(title);
+                    System.out.println("Successful edit");
+                    System.out.println(books.get(index));
+                    break;
+                }
+                else if (userInput.toLowerCase().equals("author")) {
+                    System.out.println("Change author: ");
+                    author = input.nextLine();
+                    books.get(index).setAuthor(author);
+                    System.out.println("Successful edit");
+                    System.out.println(books.get(index));
+                    break;
+                }
+                else if (userInput.toLowerCase().equals("year")) {
+                    System.out.println("Change year: ");
+
+                    while(checkContinue) {
+                        if(input.hasNextInt()) {
+                            year = input.nextInt();
+                        }
+                        else {
+                            System.out.println("Enter a valid year");
+                            input.next();
+                            continue;
+                        }
+                        checkContinue = false;
+                    } 
+
+                    books.get(index).setYear(year);
+                    System.out.println("Successful edit");
+                    System.out.println(books.get(index));
+                    break;
+                }
+                else if (userInput.toLowerCase().equals("description")) {
+                    System.out.println("Change description: ");
+                    description = input.nextLine();
+                    books.get(index).setDescription(description);
+                    System.out.println("Successful edit");
+                    System.out.println(books.get(index));
+                    System.out.println(books.get(index).getDescription());
+                    break;
+                }
+                else if (userInput.toLowerCase().equals("genre")) {
+                    while (!(Character.toLowerCase(option) == 'y')) {
+                        System.out.println("Add genre: ");
+                        genre = input.nextLine();
+                        
+                        while (!(genre.toLowerCase().equals("done"))) {
+                            genreList.add(genre);
+                            System.out.println("Enter [done] when finish adding genre: ");
+                            genre = input.nextLine();
+                        }
+
+                        System.out.println(genreList);
+                        System.out.println("Is this correct, enter 'y'? [no for any key] ");
+                        option = input.nextLine().charAt(0);
+
+                        if(Character.toLowerCase(option) == 'y') {
+                            books.get(index).setGenre(genreList);
+                            System.out.println("Successful edit");
+                            System.out.println(books.get(index));
+                            break;
+                        }
+                    }   
+                    
+                }
+                else {
+                    System.out.println("Invalid option");
+                }
+            } while(!userInput.equals("title") || !userInput.equals("author") || !userInput.equals("year") || !userInput.equals("description") || !userInput.equals("genre"));
         }
-        
+        else {
+            System.out.println("Book does not exist");
+        }
     }
 
     public void searchBook(String title) {
@@ -150,7 +227,7 @@ public class Library {
         }
 
         if(!checkContinue) {
-            System.out.println("Invalid title");
+            System.out.println("Title does not exist");
         }
     }
 

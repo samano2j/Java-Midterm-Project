@@ -1,13 +1,13 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Book {
     private String title;
     private String author;
     private int year;
-    private String[] genre;
+    private ArrayList<String> genre = new ArrayList<>();
     private String description;
 
-    public Book(String title, String author, int year, String[] genre, String description) {
+    public Book(String title, String author, int year, ArrayList<String> genre, String description) {
         this.title = title;
         this.author = author;
         this.year = year;
@@ -18,37 +18,46 @@ public class Book {
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getAuthor() {
         return author;
     }
+
     public void setAuthor(String author) {
         this.author = author;
     }
+
     public int getYear() {
         return year;
     }
+
     public void setYear(int year) {
         this.year = year;
     }
-    public String[] getGenre() {
+
+    public ArrayList<String> getGenre() {
         return genre;
     }
-    public void setGenre(String[] genre) {
+
+    public void setGenre(ArrayList<String> genre) {
         this.genre = genre;
     }
+
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
     @Override
     public String toString() {
-        return "Title=" + title + ", Author=" + author + ", Year=" + year + ", Genre=" + Arrays.toString(genre);
+        return "Book [title=" + title + ", author=" + author + ", year=" + year + ", genre=" + genre + "]";
     }
 
 }

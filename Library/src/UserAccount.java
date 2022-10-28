@@ -20,43 +20,56 @@ public class UserAccount extends LibraryAccount{
                     "Select an option from the menu\n"+
                     "A: Search book\n"+
                     "B: Show List of Books\n"+
-                    "C: Read a book\n"+
-                    "D: Log out\n"+
+                    "C: Log out\n"+
                     "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*="
                 );
-
-                option = input.next().charAt(0); 
+                option = ' ';
+                option = input.nextLine().charAt(0); 
 
                 clrscr();
 
                 switch (Character.toLowerCase(option)) {
                     case 'a':
                         System.out.println("Enter a character or word: ");
-                        userInput = input.next();
+                        userInput = input.nextLine();
+
                         library.searchBook(userInput);
-                        System.out.println("Enter any key to return to previous menu: ");
-                        option = input.next().charAt(0); 
+
+                        System.out.println("Enter [read] if you want to read a book or any other key to return previous menu: ");
+                        userInput = input.nextLine(); 
+                        while(userInput.toLowerCase().equals("read")){
+                            library.readBook();
+                            System.out.println("Enter [read] if you want to read a book or any other key to return previous menu: ");
+                            userInput = input.nextLine(); 
+                        }
+
+                        clrscr();
                         break;
+
                     case 'b':
                         library.showList();
-                        System.out.println("Enter any key to return to previous menu: ");
-                        option = input.next().charAt(0); 
+
+                        System.out.println("Enter [read] if you want to read a book or any other key to return previous menu: ");
+                        userInput = input.nextLine(); 
+                        while(userInput.toLowerCase().equals("read")){
+                            library.readBook();
+                            System.out.println("Enter [read] if you want to read a book or any other key to return previous menu: ");
+                            userInput = input.nextLine(); 
+                        }
+
+                        clrscr();
                         break;
-                    case 'c':
-                        library.showList();
-                        library.readBook();
-                        System.out.println("Enter any key to return to previous menu: ");
-                        option = input.next().charAt(0); 
-                        break;
+
                     default:
-                        if (Character.toLowerCase(option) == 'd'){
+                        if (Character.toLowerCase(option) == 'c'){
                             break;
                         }
+                        
                         System.out.println("Invalid option. Please try again");
                         break;
                 }
 
-            }while(Character.toLowerCase(option) != 'd');
+            }while(Character.toLowerCase(option) != 'c');
 
             System.out.println("Thank you for visiting the library! See you again....");
             System.exit(0);

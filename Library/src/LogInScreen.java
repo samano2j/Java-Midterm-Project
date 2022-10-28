@@ -1,12 +1,11 @@
-import java.io.IOException;
 import java.util.Scanner;
 
-public class LibrarySystem {
+public class LogInScreen {
     public static void main(String[] args) {
 
         try (Scanner input = new Scanner(System.in)) {
-            UserAccount user = new UserAccount("userN","1234");            //Normal User
-            LibrarianAccount librarian = new LibrarianAccount("userL","5678");      //Librarian User
+            UserAccount user = new UserAccount("userN","1234");            
+            LibrarianAccount librarian = new LibrarianAccount("userL","5678");      
             String username;
             String password;
            
@@ -15,10 +14,10 @@ public class LibrarySystem {
                                 "=============================");
 
             while(true){
-                clrscr();
-                System.out.println("Please enter your username");
+                
+                System.out.println("Enter your username: ");
                 username = input.nextLine();
-                System.out.println("Please enter your password");
+                System.out.println("Enter your password: ");
                 password = input.nextLine();
 
                 if((username.equals(user.getUsername()) && password.equals(user.getPassword()))
@@ -26,7 +25,7 @@ public class LibrarySystem {
                     break;
                 }
 
-                System.out.println("Invalid credentials\nPress [enter] key to try again or press [Q] to quit");
+                System.out.println("Invalid credentials\nPress [enter] key to try again or press q to quit");
 
                 if(input.nextLine().toLowerCase().equals("q")){
                     System.out.println("Thank you for visiting the library!");
@@ -34,7 +33,7 @@ public class LibrarySystem {
                 }
             }
 
-            clrscr();
+            user.clrscr();
 
             if(username.equals(user.getUsername())) {
                 System.out.println("Welcome! " + username);
@@ -42,7 +41,7 @@ public class LibrarySystem {
             }
 
             if(username.equals(librarian.getUsername())) {
-                System.out.println("Welcome! " + username);
+                System.out.println("Welcome! Librarian " + username);
                 librarian.showDashboard();
             }
             
@@ -50,16 +49,5 @@ public class LibrarySystem {
         
     
     }
-
-    public static void clrscr(){
-		//Clears Screen in java
-		try {
-			if (System.getProperty("os.name").contains("Windows"))
-				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-			else
-				Runtime.getRuntime().exec("clear");
-				System.out.print("\033\143");
-		} catch (IOException | InterruptedException ex) {}
-	}
 
 }
