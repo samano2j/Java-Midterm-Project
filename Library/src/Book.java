@@ -19,12 +19,20 @@ public class Book {
         return title;
     }
 
+    public String getTitle1() {
+        return title.toLowerCase();
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
 
     public String getAuthor() {
         return author;
+    }
+
+    public String getAuthor1() {
+        return author.toLowerCase();
     }
 
     public void setAuthor(String author) {
@@ -59,5 +67,4 @@ public class Book {
     public String toString() {
         return "Book [title=" + title + ", author=" + author + ", year=" + year + ", genre=" + genre + "]";
     }
-
 }

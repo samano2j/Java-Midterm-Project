@@ -1,19 +1,32 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class Library {
 
-    private ArrayList<Book> books = new ArrayList<>();
+    private static ArrayList<Book> books = new ArrayList<>();
 
     public Library() {
         ArrayList<String> genre1 = new ArrayList<>();
-        genre1.add("Action");
-        genre1.add("Sports");
-        genre1.add("Thriller");
+        genre1.add("action");
+        genre1.add("sports");
+        genre1.add("thriller");
 
         ArrayList<String> genre2 = new ArrayList<>();
-        genre2.add("Science Fiction");
-        genre2.add("Thriller");
+        genre2.add("science fiction");
+        genre2.add("thriller");
+
+        ArrayList<String> genre3 = new ArrayList<>();
+        genre3.add("fantasy");
+        ArrayList<String> genre4 = new ArrayList<>();
+        genre4.add("adventure");
+        ArrayList<String> genre5 = new ArrayList<>();
+        genre5.add("romance");
+        ArrayList<String> genre6 = new ArrayList<>();
+        genre6.add("horror");
+        ArrayList<String> genre7 = new ArrayList<>();
+        genre7.add("humor");
 
         books.add(new Book("Blue Lock", "Muneyuki Kaneshiro", 2021, genre1, 
         "In 2018, the Japanese national team finished 16th in the FIFA World Cup. As a result, the Japanese Football Union hires the soccer enigma Ego Jinpachi. His master plan to lead Japan to stardom is Blue Lock," +
@@ -22,6 +35,12 @@ public class Library {
         books.add(new Book("The Hunger Games", "Suzanne Collins", 2008, genre2, "In what was once North America, the Capitol of Panem maintains its hold on its 12 districts by forcing them" + 
         " each to select a boy and a girl, called Tributes, to compete in a nationally televised event called the Hunger Games. Every citizen must watch as the youths fight to the death until only one remains." + 
         " District 12 Tribute Katniss Everdeen (Jennifer Lawrence) has little to rely on, other than her hunting skills and sharp instincts, in an arena where she must weigh survival against love."));
+        books.add(new Book("Book3","Author1",103,genre5,"Summary3"));
+        books.add(new Book("Book4","Author3",102,genre6,"Summary4"));
+        books.add(new Book("Book5","Author4",101,genre7,"Summary5"));
+        books.add(new Book("Book1","Author5",105,genre3,"Summary1"));
+        books.add(new Book("Book2","Author2",104,genre4,"Summary2"));
+        sortbyTitle();
     }
 
     public void addBook() {
@@ -49,8 +68,6 @@ public class Library {
                 }
                 checkContinue = false;
             } 
-
-           
 
             System.out.println("Is the following details correct?(y/n)");
             System.out.println("Title: " + title +
@@ -157,12 +174,13 @@ public class Library {
                     break;
                 }
                 else if (userInput.toLowerCase().equals("genre")) {
+                    boolean temp = true;
                     while (!(Character.toLowerCase(option) == 'y')) {
                         System.out.println("Add genre: ");
                         genre = input.nextLine();
                         
                         while (!(genre.toLowerCase().equals("done"))) {
-                            genreList.add(genre);
+                            genreList.add(genre.toLowerCase());
                             System.out.println("Enter [done] when finish adding genre: ");
                             genre = input.nextLine();
                         }
@@ -175,8 +193,12 @@ public class Library {
                             books.get(index).setGenre(genreList);
                             System.out.println("Successful edit");
                             System.out.println(books.get(index));
-                            break;
+                            temp = false;
                         }
+                    }
+                    
+                    if (!temp) {
+                        break;
                     }   
                     
                 }
@@ -190,11 +212,56 @@ public class Library {
         }
     }
 
-    public void searchBook(String title) {
+    public void searchBookTitle(String title) {
         boolean contain = false;
 
         for (int i = 0; i < books.size(); i++) {
             if((books.get(i).getTitle().toLowerCase()).contains(title.toLowerCase())) {
+                System.out.println(books.get(i));
+                contain = true;
+            }
+        }
+
+        if(!contain) {
+            System.out.println("Book does not exist");
+        }
+    }
+
+    public void searchBookAuthor(String author) {
+        boolean contain = false;
+
+        for (int i = 0; i < books.size(); i++) {
+            if((books.get(i).getAuthor().toLowerCase()).contains(author.toLowerCase())) {
+                System.out.println(books.get(i));
+                contain = true;
+            }
+        }
+
+        if(!contain) {
+            System.out.println("Book does not exist");
+        }
+    }
+
+    public void searchBookYear(int year) {
+        boolean contain = false;
+
+        for (int i = 0; i < books.size(); i++) {
+            if((books.get(i).getYear()) == year) {
+                System.out.println(books.get(i));
+                contain = true;
+            }
+        }
+
+        if(!contain) {
+            System.out.println("Book does not exist");
+        }
+    }
+
+    public void searchBookGenre(String genre) {
+        boolean contain = false;
+
+        for (int i = 0; i < books.size(); i++) {
+            if((books.get(i).getGenre()).contains(genre.toLowerCase())) {
                 System.out.println(books.get(i));
                 contain = true;
             }
@@ -230,5 +297,19 @@ public class Library {
             System.out.println("Title does not exist");
         }
     }
+
+    public void sortbyTitle() {
+        Collections.sort(books, Comparator.comparing(Book::getTitle1));
+    }
+
+    public void sortbyAuthor() {
+        Collections.sort(books, Comparator.comparing(Book::getAuthor1));
+    }
+
+    public void sortbyYear() {
+        Collections.sort(books, Comparator.comparing(Book::getYear));
+        Collections.reverse(books);
+    }
+    
 
 }
