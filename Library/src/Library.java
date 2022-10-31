@@ -77,7 +77,7 @@ public class Library {
 
             if(Character.toLowerCase(userInput) == 'y') {
                 books.add(new Book(title, author, year, null, null));
-                sortbyAuthor();
+                sortbyTitle();
                 System.out.println("Book successfully added");
                 checkContinue = false;
             }
